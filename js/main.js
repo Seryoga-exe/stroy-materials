@@ -114,7 +114,7 @@ function submitOrder() {
     localStorage.setItem('orders', JSON.stringify(orders));
 
     // 3. Отправляем на Formspree (ID замените на свой)
-    fetch('https://formspree.io/f/ВАШ_FORMSPREE_ID', {
+    fetch('https://formspree.io/f/xoeeodgw', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
