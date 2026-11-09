@@ -97,16 +97,47 @@ function submitOrder() {
         return;
     }
 
-    // Имитация отправки на сервер
-    document.getElementById('checkout-form').style.display = 'none';
-    document.getElementById('cart-items').innerHTML = '';
-    document.getElementById('cart-total-price').innerText = '0';
-    document.getElementById('order-message').style.display = 'block';
-    document.getElementById('order-message').innerText = `Спасибо, ${name}! Заказ оформлен. Мы свяжемся с вами.`;
-    
-    cart = [];
-    saveCart();
-}
+    // 1. Формируем объект заказа
+    const order = {
+        id: Date.now(),
+        name: name,
+        phone: phone,
+        address: address,
+        items: cart,
+        total: document.getElementById('cart-total-price').innerText,
+        date: new Date().toLocaleString()
+    };
 
+    // 2. Сохраняем в локальную историю (LocalStorage)
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // 3. Отправляем на Formspree (ID замените на свой)
+    fetch('https://formspree.io/f/ВАШ_FORMSPREE_ID', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(order)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 4. Успешная отправка: очищаем корзину и показываем сообщение
+        document.getElementById('checkout-form').style.display = 'none';
+        document.getElementById('cart-items').innerHTML = '';
+        document.getElementById('cart-total-price').innerText = '0';
+        document.getElementById('order-message').style.display = 'block';
+        document.getElementById('order-message').innerText = `Спасибо, ${name}! Заказ №${order.id} оформлен.`;
+        
+        cart = [];
+        saveCart();
+    })
+    .catch(error => {
+        alert('Ошибка отправки. Попробуйте ещё раз.');
+        console.error(error);
+    });
+}
 // Инициализация счетчика при загрузке
 updateCartCount();
