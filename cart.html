@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина — СтройБаза</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo"><a href="index.html">🏗️ СтройБаза</a></div>
+        <nav class="nav">
+            <a href="index.html">Каталог</a>
+            <a href="cart.html" class="cart-link">Корзина <span id="cart-count">0</span></a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Ваша корзина</h1>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+            <h3>Итого: <span id="cart-total-price">0</span> ₽</h3>
+        </div>
+        
+        <div class="checkout-form" id="checkout-form" style="display:none;">
+            <h2>Оформление заказа</h2>
+            <input type="text" id="name" placeholder="Ваше имя" required>
+            <input type="tel" id="phone" placeholder="Телефон" required>
+            <input type="text" id="address" placeholder="Адрес доставки" required>
+            <button onclick="submitOrder()">Оформить заказ</button>
+        </div>
+        <div id="order-message" style="display:none; color: green; font-weight: bold; margin-top:20px;"></div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 СтройБаза. Все права защищены.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
